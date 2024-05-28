@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 class Cinema {
 
+    private final static String VACANT_SEAT = "\033[32;1mS\033[0m";
+    private final static String OCCUPIED_SEAT = "\033[31;1mB\033[0m";
     private static int rowNumber = 0;
     private static int seatNumber = 0;
     private static int ticketsSold = 0, income = 0;
@@ -62,10 +64,9 @@ class Cinema {
 
     private static void createCinema() {
         for (int i = 0; i < cinema.length; ++i) {
-
             for (int j = 0; j < cinema[i].length; ++j) {
                 if (i > 0 && j > 0) {
-                    cinema[i][j] = "S";
+                    cinema[i][j] = VACANT_SEAT;
                 } else if (i == 0 && j > 0) {
                     cinema[i][j] = Integer.toString(j);
                 } else if (i > 0) {
@@ -77,7 +78,7 @@ class Cinema {
         }
     }
 
-    private static void printCinemaMap(String[][] seatsMap){
+    private static void printCinemaMap(String[][] seatsMap) {
         System.out.println("\nCinema:");
         for (String[] symbols : seatsMap) {
             for (String symbol : symbols) {
@@ -87,9 +88,9 @@ class Cinema {
         }
     }
 
-    private static void loadBusySeats(int row, int col){
-        if (cinema[row][col].equals("S")){
-            cinema[row][col] = "B";
+    private static void loadBusySeats(int row, int col) {
+        if (cinema[row][col].equals(VACANT_SEAT)) {
+            cinema[row][col] = OCCUPIED_SEAT;
             ticketsSold++;
         } else {
             System.out.println("That ticket has already been purchased!");
@@ -97,7 +98,7 @@ class Cinema {
         }
     }
 
-    private static void checkPrice(int rows, int seats, int rowNumber){
+    private static void checkPrice(int rows, int seats, int rowNumber) {
         if (purchaseConfirmation) {
             if (rows * seats < 60) {
                 System.out.println("TICKET PURCHASED!\nTicket price: $10");
@@ -114,18 +115,18 @@ class Cinema {
         }
     }
 
-    private static void calculateProfit(int rows, int seats, int ticketsSold){
+    private static void calculateProfit(int rows, int seats, int ticketsSold) {
         int maximumRevenue;
-        double ticketsSoldPercent = (double) (ticketsSold * 100) /(rows * seats);
+        double ticketsSoldPercent = (double) (ticketsSold * 100) / (rows * seats);
         System.out.printf("Number of purchased tickets: %d\n", ticketsSold);
-        System.out.printf("Percentage: %.2f%%\n", ticketsSoldPercent);
+        System.out.printf("Occupancy: %.2f%%\n", ticketsSoldPercent);
         System.out.printf("Current income: $%d\n", income);
-        if (rows * seats < 60){
+        if (rows * seats < 60) {
             System.out.print("Maximum revenue: ");
             System.out.println("$" + rows * seats * 10);
         } else {
-            System.out.print("Total income: ");
-            if (rows % 2 == 0){
+            System.out.print("Maximum revenue: ");
+            if (rows % 2 == 0) {
                 maximumRevenue = 8 * (rows / 2) * seats + 10 * (rows / 2) * seats;
                 System.out.println("$" + maximumRevenue);
             } else {
@@ -136,7 +137,7 @@ class Cinema {
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static void printIntro(){
+    private static void printIntro() {
         System.out.println("-----------Welcome to the CINEJAVA-------------");
         System.out.println("First create your movie theater room by typing the dimensions");
         System.out.println("""
