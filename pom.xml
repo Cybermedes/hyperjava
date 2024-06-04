@@ -51,7 +51,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <!-- here we specify that we want to use the main method within the Main class -->
-                                <mainClass>com.testingground.Main</mainClass>
+                                <mainClass>com.introduction.Intro</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
@@ -62,7 +62,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>com.testingground.Main</mainClass>
+                                <mainClass>com.introduction.Intro</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>
