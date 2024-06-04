@@ -5,19 +5,22 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        getUserInput();
+        System.out.println(getUserInput());
     }
 
-    private static void getUserInput() {
+    protected static String getUserInput() {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("Input string:");
             String input = scanner.nextLine();
 
             System.out.println();
             char[] characters = input.toCharArray();
+            StringBuilder sb = new StringBuilder();
+
             for (char character : characters) {
-                System.out.printf("%c ", character);
+                sb.append(character).append(" ");
             }
+            return sb.toString();
         }
     }
 }
