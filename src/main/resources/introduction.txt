@@ -1,0 +1,24 @@
+ /$$   /$$                                           /$$$$$
+| $$  | $$                                          |__  $$
+| $$  | $$ /$$   /$$  /$$$$$$   /$$$$$$   /$$$$$$      | $$  /$$$$$$  /$$    /$$ /$$$$$$
+| $$$$$$$$| $$  | $$ /$$__  $$ /$$__  $$ /$$__  $$     | $$ |____  $$|  $$  /$$/|____  $$
+| $$__  $$| $$  | $$| $$  \ $$| $$$$$$$$| $$  \__//$$  | $$  /$$$$$$$ \  $$/$$/  /$$$$$$$
+| $$  | $$| $$  | $$| $$  | $$| $$_____/| $$     | $$  | $$ /$$__  $$  \  $$$/  /$$__  $$
+| $$  | $$|  $$$$$$$| $$$$$$$/|  $$$$$$$| $$     |  $$$$$$/|  $$$$$$$   \  $/  |  $$$$$$$
+|__/  |__/ \____  $$| $$____/  \_______/|__/      \______/  \_______/    \_/    \_______/
+           /$$  | $$| $$
+          |  $$$$$$/| $$
+           \______/ |__/
+
+************ Hyperskill projects in Java ************
+This repository contains the following projects:
+
+- Simple Chat Bot ( java -cp com.chatbot.Main [nameOfTheJar].jar )
+- Zookeeper ( java -cp com.zookeeper.Main [nameOfTheJar].jar )
+- Coffee Machine Simulator ( java -cp com.coffeemachine.Main [nameOfTheJar].jar )
+- Cinema Room Manager ( java -cp com.cinemaroom.Main [nameOfTheJar].jar )
+- Simple Tic-Tac-Toe ( java -cp com.tictactoe.Main [nameOfTheJar].jar )
+- Chuck Norris Cipher Encoder ( java -cp com.chucknorriscipher.Main [nameOfTheJar].jar )
+
+Each project runs independently of each other, to run a specific a project
+from the jar file just type the command inside parentheses on your terminal.
