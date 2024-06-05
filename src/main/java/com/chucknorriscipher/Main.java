@@ -5,23 +5,40 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Input string:");
-        char[] graphemes = getUserInput();
-        String[] graphemesBinary = convertCharToBinary(graphemes);
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Please input operation (encode/decode/exit):");
+            String operation = scanner.nextLine();
 
-        System.out.println();
-        System.out.println("The result:");
-        String encryptedMessage = encryptMessage(graphemesBinary);
-        System.out.println(encryptedMessage);
-        String plainText = CipherDecryptor.decryptMessage(encryptedMessage);
-        System.out.println(plainText);
-
-    }
-
-    protected static char[] getUserInput() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            String input = scanner.nextLine();
-            return input.toCharArray();
+            switch (operation) {
+                case "encode" -> {
+                    System.out.println("Input string:");
+                    String input = scanner.nextLine();
+                    char[] graphemes = input.toCharArray();
+                    String[] graphemesBinary = convertCharToBinary(graphemes);
+                    String encryptedMessage = encryptMessage(graphemesBinary);
+                    System.out.println(encryptedMessage);
+                    System.out.println();
+                }
+                case "decode" -> {
+                    System.out.println("Input encoded string:");
+                    String encryptedMessage = scanner.nextLine();
+                    try {
+                        String plainText = CipherDecryptor.decryptMessage(encryptedMessage);
+                        System.out.println("Decoded string:");
+                        System.out.println(plainText);
+                    } catch (Exception e) {
+                        System.out.println("Encoded string is not valid.");
+                    }
+                    System.out.println();
+                }
+                case "exit" -> {
+                    System.out.println("Bye!");
+                    scanner.close();
+                    System.exit(0);
+                }
+                default -> System.out.printf("There is no '%s' operation%n%n", operation);
+            }
         }
     }
 
