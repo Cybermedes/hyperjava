@@ -49,4 +49,38 @@ class MainTest {
 
         assertArrayEquals(expectedOutput, actualOutput);
     }
+
+    @Test
+    @DisplayName("Test message encryption")
+    void encryptMessage_BinaryStringArray_returnEncryptedString() {
+        assertAll(
+                () -> {
+                    String input = "C";
+                    ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+                    System.setIn(testIn);
+                    char[] chars = Main.getUserInput();
+                    String[] strings = Main.convertCharToBinary(chars);
+                    String expected = "0 0 00 0000 0 00";
+                    assertEquals(expected, Main.encryptMessage(strings));
+                },
+                () -> {
+                    String input = "CC";
+                    ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+                    System.setIn(testIn);
+                    char[] chars = Main.getUserInput();
+                    String[] strings = Main.convertCharToBinary(chars);
+                    String expected = "0 0 00 0000 0 000 00 0000 0 00";
+                    assertEquals(expected, Main.encryptMessage(strings));
+                },
+                () -> {
+                    String input = "Hi <3";
+                    ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+                    System.setIn(testIn);
+                    char[] chars = Main.getUserInput();
+                    String[] strings = Main.convertCharToBinary(chars);
+                    String expected = "0 0 00 00 0 0 00 000 0 00 00 0 0 0 00 00 0 0 00 0 0 0 00 000000 0 0000 00 000 0 00 00 00 0 00";
+                    assertEquals(expected, Main.encryptMessage(strings));
+                }
+        );
+    }
 }
