@@ -5,22 +5,30 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println(getUserInput());
+        System.out.println("Input string:");
+        char[] graphemes = getUserInput();
+        String[] graphemesBinary = convertCharToBinary(graphemes);
+
+        System.out.println();
+        System.out.println("The result:");
+        for (int i = 0; i < graphemes.length; i++) {
+            System.out.printf("%c = %s%n", graphemes[i], graphemesBinary[i]);
+        }
     }
 
-    protected static String getUserInput() {
+    protected static char[] getUserInput() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Input string:");
             String input = scanner.nextLine();
-
-            System.out.println();
-            char[] characters = input.toCharArray();
-            StringBuilder sb = new StringBuilder();
-
-            for (char character : characters) {
-                sb.append(character).append(" ");
-            }
-            return sb.toString();
+            return input.toCharArray();
         }
+    }
+
+    protected static String[] convertCharToBinary(char[] chars) {
+        String[] binary = new String[chars.length];
+        for (int i = 0; i < chars.length; i++) {
+            binary[i] = String.format("%7s", Integer.toBinaryString(chars[i]))
+                    .replace(' ', '0');
+        }
+        return binary;
     }
 }
