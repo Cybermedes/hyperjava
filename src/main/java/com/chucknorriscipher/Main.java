@@ -11,7 +11,10 @@ public class Main {
 
         System.out.println();
         System.out.println("The result:");
-        System.out.println(encryptMessage(graphemesBinary));
+        String encryptedMessage = encryptMessage(graphemesBinary);
+        System.out.println(encryptedMessage);
+        String plainText = CipherDecryptor.decryptMessage(encryptedMessage);
+        System.out.println(plainText);
 
     }
 
