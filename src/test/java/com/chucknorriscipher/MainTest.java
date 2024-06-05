@@ -5,34 +5,48 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("Cipher test")
 class MainTest {
 
     @Test
-    @DisplayName("Test getUserInput return")
-    void getUserInput() {
+    @DisplayName("Test if method returns a char array")
+    void getUserInput_StringFromInput_ReturnCharArray() {
 
         assertAll(
                 () -> {
-                    String text = "Hello World!";
-                    ByteArrayInputStream testIn = new ByteArrayInputStream(text.getBytes());
+                    String inputText = "Hello World!";
+                    char[] expected = {'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!'};
+                    ByteArrayInputStream testIn = new ByteArrayInputStream(inputText.getBytes());
                     System.setIn(testIn);
-                    assertEquals(Main.getUserInput(), "H e l l o   W o r l d ! ");
+                    assertArrayEquals(expected, Main.getUserInput());
                 },
                 () -> {
-                    String text2 = "Greetings!";
-                    ByteArrayInputStream testIn2 = new ByteArrayInputStream(text2.getBytes());
+                    String inputText = "Greetings!";
+                    char[] expected = {'G', 'r', 'e', 'e', 't', 'i', 'n', 'g', 's', '!'};
+                    ByteArrayInputStream testIn2 = new ByteArrayInputStream(inputText.getBytes());
                     System.setIn(testIn2);
-                    assertEquals(Main.getUserInput(), "G r e e t i n g s ! ");
+                    assertArrayEquals(expected, Main.getUserInput());
                 },
                 () -> {
-                    String text3 = "Who am I?";
-                    ByteArrayInputStream testIn3 = new ByteArrayInputStream(text3.getBytes());
+                    String inputText = "Who am I?";
+                    char[] expected = {'W', 'h', 'o', ' ', 'a', 'm', ' ', 'I', '?'};
+                    ByteArrayInputStream testIn3 = new ByteArrayInputStream(inputText.getBytes());
                     System.setIn(testIn3);
-                    assertEquals(Main.getUserInput(), "W h o   a m   I ? ");
+                    assertArrayEquals(expected, Main.getUserInput());
                 }
         );
+    }
+
+    @Test
+    @DisplayName("Test conversion char array to binary")
+    void convertCharToBinary_getCharArray_returnStringArrayWithBinary() {
+
+        char[] input = {'a', 'h', 'I', '?', '1', ' '};
+        String[] expectedOutput = {"1100001", "1101000", "1001001", "0111111", "0110001", "0100000"};
+        String[] actualOutput = Main.convertCharToBinary(input);
+
+        assertArrayEquals(expectedOutput, actualOutput);
     }
 }
