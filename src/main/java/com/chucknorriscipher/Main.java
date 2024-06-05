@@ -27,7 +27,7 @@ public class Main {
                         String plainText = CipherDecryptor.decryptMessage(encryptedMessage);
                         System.out.println("Decoded string:");
                         System.out.println(plainText);
-                    } catch (Exception e) {
+                    } catch (IllegalArgumentException e) {
                         System.out.println("Encoded string is not valid.");
                     }
                     System.out.println();
