@@ -11,9 +11,8 @@ public class Main {
 
         System.out.println();
         System.out.println("The result:");
-        for (int i = 0; i < graphemes.length; i++) {
-            System.out.printf("%c = %s%n", graphemes[i], graphemesBinary[i]);
-        }
+        System.out.println(encryptMessage(graphemesBinary));
+
     }
 
     protected static char[] getUserInput() {
@@ -30,5 +29,40 @@ public class Main {
                     .replace(' ', '0');
         }
         return binary;
+    }
+
+    // Encrypt message using Chuck Norris Unary Code technique
+    protected static String encryptMessage(String[] graphemesBinary) {
+        StringBuilder sb = new StringBuilder();
+        String allBinary = String.join("", graphemesBinary);
+        int i = 0;
+
+        while (i < allBinary.length()) {
+
+            // Set which char to start counting at the current iteration
+            char bit = allBinary.charAt(i);
+            int count = 1;
+            i++;
+
+            // Start counting the characters and increase index i at the same time
+            while (i < allBinary.length() && allBinary.charAt(i) == bit) {
+                count++;
+                i++;
+            }
+
+            // Determine the prefix type
+            if (bit == '1') {
+                sb.append("0 ");
+            } else {
+                sb.append("00 ");
+            }
+
+            // Append the number of bits in the sequence
+            sb.append("0".repeat(Math.max(0, count)));
+            sb.append(' ');
+        }
+        // Remove the empty space at the end of the string
+        sb.setLength(sb.length() - 1);
+        return sb.toString();
     }
 }
