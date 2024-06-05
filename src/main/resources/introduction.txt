@@ -13,12 +13,16 @@
 ************ Hyperskill projects in Java ************
 This repository contains the following projects:
 
-- Simple Chat Bot                   java -cp [nameOfTheJar].jar com.chatbot.Main
-- Zookeeper                         java -cp [nameOfTheJar].jar com.zookeeper.Main
-- Coffee Machine Simulator          java -cp [nameOfTheJar].jar com.coffeemachine.Main
-- Cinema Room Manager               java -cp [nameOfTheJar].jar com.cinemaroom.Main
-- Simple Tic-Tac-Toe                java -cp [nameOfTheJar].jar com.tictactoe.Main
-- Chuck Norris Cipher Encoder       java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
+- ✅ Simple Chat Bot                     java -cp [nameOfTheJar].jar com.chatbot.Main
+- ✅ Zookeeper                           java -cp [nameOfTheJar].jar com.zookeeper.Main
+- ✅ Coffee Machine Simulator            java -cp [nameOfTheJar].jar com.coffeemachine.Main
+- ✅ Cinema Room Manager                 java -cp [nameOfTheJar].jar com.cinemaroom.Main
+- ⚠️  Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
+- ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
+
+Symbols:
+✅ - Completed
+⚠️ - Incomplete or with a bug
 
 Each project runs independently of each other, to run a specific a project
 from the jar file just type the command inside parentheses on your terminal.

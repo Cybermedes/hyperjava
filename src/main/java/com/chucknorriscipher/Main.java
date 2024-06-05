@@ -17,6 +17,7 @@ public class Main {
                     char[] graphemes = input.toCharArray();
                     String[] graphemesBinary = convertCharToBinary(graphemes);
                     String encryptedMessage = encryptMessage(graphemesBinary);
+                    System.out.println("\033[4mEncoded string:\033[0m");
                     System.out.println(encryptedMessage);
                     System.out.println();
                 }
@@ -25,10 +26,10 @@ public class Main {
                     String encryptedMessage = scanner.nextLine();
                     try {
                         String plainText = CipherDecryptor.decryptMessage(encryptedMessage);
-                        System.out.println("Decoded string:");
+                        System.out.println("\033[4mDecoded string:\033[0m");
                         System.out.println(plainText);
                     } catch (IllegalArgumentException e) {
-                        System.out.println("Encoded string is not valid.");
+                        System.out.println("\033[31mEncoded string is not valid.\033[0m");
                     }
                     System.out.println();
                 }
@@ -37,7 +38,7 @@ public class Main {
                     scanner.close();
                     System.exit(0);
                 }
-                default -> System.out.printf("There is no '%s' operation%n%n", operation);
+                default -> System.out.printf("\033[31mThere is no '%s' operation\033[0m%n%n", operation);
             }
         }
     }
