@@ -1,27 +1,42 @@
 package com.asciimirror;
 
-import java.io.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-
         try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("""
+                    *You can find some text files templates at the folder on the github repo:
+                    src/main/resources/ascii_animals/
+                    """);
             System.out.println("Input the file path:");
-            String filePath = scanner.nextLine();
+            String userInput = scanner.nextLine();
 
-            try (InputStream is = Main.class.getClassLoader().getResourceAsStream(filePath);
-                 BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            Path filePath = Path.of(userInput);
+            if (Files.exists(filePath) && Files.isRegularFile(filePath)) {
+                List<String> lines = Files.readAllLines(filePath);
+                Optional<Integer> max = lines.stream()
+                        .map(String::length)
+                        .max(Integer::compareTo);
 
-                String line;
-                while ((line = br.readLine()) != null) {
-                    System.out.printf("%-16s | %16s%n", line, mirrorLine(line));
+                if (max.isPresent()) {
+                    int longest = max.get();
+                    for (String line : lines) {
+                        System.out.printf("%-" + longest + "s || %" + longest + "s%n", line, mirrorLine(line));
+                    }
                 }
 
+            } else {
+                System.out.println("File not found!");
             }
-        } catch (IOException | NullPointerException e) {
-            System.out.println("File not found!");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -41,6 +56,8 @@ public class Main {
             case ')' -> '(';
             case '[' -> ']';
             case ']' -> '[';
+            case '<' -> '>';
+            case '>' -> '<';
             default -> c;
         };
     }
