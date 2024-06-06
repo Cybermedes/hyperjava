@@ -19,6 +19,7 @@ This repository contains the following projects:
 - ✅ Cinema Room Manager                 java -cp [nameOfTheJar].jar com.cinemaroom.Main
 - ⚠️  Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
 - ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
+- ✅ ASCII Mirror                        java -cp [nameOfTheJar].jar com.asciimirror.Main
 
 Symbols:
 ✅ - Completed
