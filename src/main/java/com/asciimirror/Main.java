@@ -13,7 +13,9 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("""
                     *You can find some text files templates at the folder on the github repo:
-                    src/main/resources/ascii_animals/
+                    => src/main/resources/ascii_animals/
+                    And then you can pass either the relative or absolute path of template to
+                    the program*
                     """);
             System.out.println("Input the file path:");
             String userInput = scanner.nextLine();
