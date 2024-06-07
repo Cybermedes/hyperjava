@@ -40,6 +40,10 @@ class CipherDecryptorTest {
                 () -> {
                     String input = "0 0 1 00 0 0 1 000";
                     assertThrows(IllegalArgumentException.class, () -> CipherDecryptor.decryptMessage(input));
+                },
+                () -> {
+                    String input = "0 0 00 00 0 0 00 00";
+                    assertThrows(IllegalArgumentException.class, () -> CipherDecryptor.decryptMessage(input));
                 }
         );
     }

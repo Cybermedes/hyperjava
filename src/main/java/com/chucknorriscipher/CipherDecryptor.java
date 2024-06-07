@@ -30,6 +30,11 @@ public class CipherDecryptor {
             }
         }
 
+        // If a block doesn't give all the 7 bits
+        if (byteChar.length() % 7 != 0) {
+            throw new IllegalArgumentException();
+        }
+
         int i = 6;
         while (i <= byteChar.length()) {
             char[] bits = new char[7];
