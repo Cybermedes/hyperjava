@@ -30,3 +30,4 @@ More information about what each project does and the objectives, click on the l
 - com.tictactoe: Simple Tic-Tac-Toe (https://hyperskill.org/projects/48?track=15)
 - com.chucknorriscipher: Chuck Norris Cipher Encoder (https://hyperskill.org/projects/293?track=9)
 - com.asciimirror: ASCII Mirror (https://hyperskill.org/projects/260)
+- com.bullsandcows: Bull and Cows (https://hyperskill.org/projects/53?track=12)
