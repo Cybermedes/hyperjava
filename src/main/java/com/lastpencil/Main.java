@@ -38,6 +38,9 @@ public class Main {
             }
             String otherPlayer = player.equals("John") ? "Jack" : "John";
 
+            // Instantiate Jack, the Bot
+            Bot jack = new Bot();
+
             // Initialize some variables to be used inside the loop
             int numberOfPencilsTaken = 0;
             int roundNumber = 2; // variable to help tracking who is the current player
@@ -52,7 +55,15 @@ public class Main {
                 boolean flag = true;
                 while (flag) {
                     try {
-                        numberOfPencilsTaken = Integer.parseInt(scanner.nextLine());
+
+                        //
+                        if (currentPlayer.equals("Jack")) {
+                            numberOfPencilsTaken = jack.takePencils(numberOfPencils);
+                            System.out.println(numberOfPencilsTaken);
+                        } else {
+                            numberOfPencilsTaken = Integer.parseInt(scanner.nextLine());
+                        }
+
                         if (numberOfPencilsTaken <= 0 || numberOfPencilsTaken >= 4) {
                             throw new NumberFormatException();
                         } else if (numberOfPencilsTaken > numberOfPencils) {
@@ -74,4 +85,3 @@ public class Main {
         }
     }
 }
-
