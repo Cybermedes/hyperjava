@@ -5,83 +5,97 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        Main main = new Main();
+        main.runGame();
+    }
 
-        // Initial setup
+    public void runGame() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("How many pencils would you like to use:");
-            int numberOfPencils;
+            int numberOfPencils = getNumberOfPencils(scanner);
+            String firstPlayer = getFirstPlayer(scanner);
+            String otherPlayer = firstPlayer.equals("John") ? "Jack" : "John";
 
-            // Loop until user sets a valid number of pencils input
-            while (true) {
-                try {
-                    numberOfPencils = Integer.parseInt(scanner.nextLine());
-                    if (numberOfPencils <= 0) {
-                        System.out.println("The number of pencils should be positive");
-                    } else {
-                        break;
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("The number of pencils should be numeric");
-                }
-            }
-
-            // Set who will the first player and loop until a valid input name
-            System.out.println("Who will be the first (John, Jack):");
-            String player;
-            while (true) {
-                player = scanner.nextLine();
-                if (player.equals("John") || player.equals("Jack")) {
-                    break;
-                } else {
-                    System.out.println("Choose between 'John' and 'Jack'");
-                }
-            }
-            String otherPlayer = player.equals("John") ? "Jack" : "John";
-
-            // Instantiate Jack, the Bot
             Bot jack = new Bot();
+            playGame(scanner, numberOfPencils, firstPlayer, otherPlayer, jack);
+        }
+    }
 
-            // Initialize some variables to be used inside the loop
-            int numberOfPencilsTaken = 0;
-            int roundNumber = 2; // variable to help tracking who is the current player
-            String currentPlayer = "";
+    private int getNumberOfPencils(Scanner scanner) {
+        System.out.println("How many pencils would you like to use:");
+        int numberOfPencils;
+        while (true) {
+            try {
+                numberOfPencils = Integer.parseInt(scanner.nextLine());
+                if (numberOfPencils <= 0) {
+                    System.out.println("The number of pencils should be positive");
+                } else {
+                    return numberOfPencils;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("The number of pencils should be numeric");
+            }
+        }
+    }
 
-            while (numberOfPencils >= 1) {
-                System.out.println("|".repeat(numberOfPencils));
-                currentPlayer = roundNumber % 2 == 0 ? player : otherPlayer;
-                System.out.printf("%s's turn!%n", currentPlayer);
+    private String getFirstPlayer(Scanner scanner) {
+        System.out.println("Who will be the first (John, Jack):");
+        String player;
+        while (true) {
+            player = scanner.nextLine();
+            if (player.equals("John") || player.equals("Jack")) {
+                return player;
+            } else {
+                System.out.println("Choose between 'John' and 'Jack'");
+            }
+        }
+    }
 
-                // Loop until a valid input value
-                boolean flag = true;
-                while (flag) {
-                    try {
+    private void playGame(Scanner scanner,
+                          int numberOfPencils,
+                          String firstPlayer,
+                          String otherPlayer,
+                          Bot bot) {
+        int numberOfPencilsTaken;
+        int roundNumber = 2;
+        String currentPlayer = "";
 
-                        //
-                        if (currentPlayer.equals("Jack")) {
-                            numberOfPencilsTaken = jack.takePencils(numberOfPencils);
-                            System.out.println(numberOfPencilsTaken);
-                        } else {
-                            numberOfPencilsTaken = Integer.parseInt(scanner.nextLine());
-                        }
+        while (numberOfPencils >= 1) {
+            System.out.println("|".repeat(numberOfPencils));
+            currentPlayer = roundNumber % 2 == 0 ? firstPlayer : otherPlayer;
+            System.out.printf("%s's turn!%n", currentPlayer);
 
-                        if (numberOfPencilsTaken <= 0 || numberOfPencilsTaken >= 4) {
-                            throw new NumberFormatException();
-                        } else if (numberOfPencilsTaken > numberOfPencils) {
-                            System.out.println("Too many pencils were taken");
-                        } else {
-                            flag = false;
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Possible values: '1', '2' or '3'");
-                    }
+            numberOfPencilsTaken = getPencilsTaken(scanner, numberOfPencils, currentPlayer, bot);
+            numberOfPencils -= numberOfPencilsTaken;
+            roundNumber++;
+        }
+
+        System.out.printf("%s won!%n", currentPlayer.equals("John") ? "Jack" : "John");
+    }
+
+    private int getPencilsTaken(Scanner scanner,
+                                int numberOfPencils,
+                                String currentPlayer,
+                                Bot bot) {
+        int numberOfPencilsTaken;
+        while (true) {
+            try {
+                if (currentPlayer.equals("Jack")) {
+                    numberOfPencilsTaken = bot.takePencils(numberOfPencils);
+                    System.out.println(numberOfPencilsTaken);
+                } else {
+                    numberOfPencilsTaken = Integer.parseInt(scanner.nextLine());
                 }
 
-                // Reduce the number of pencils in the table and increase round number
-                numberOfPencils -= numberOfPencilsTaken;
-                roundNumber++;
+                if (numberOfPencilsTaken <= 0 || numberOfPencilsTaken >= 4) {
+                    throw new NumberFormatException();
+                } else if (numberOfPencilsTaken > numberOfPencils) {
+                    System.out.println("Too many pencils were taken");
+                } else {
+                    return numberOfPencilsTaken;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Possible values: '1', '2' or '3'");
             }
-
-            System.out.printf("%s won!%n", currentPlayer.equals("John") ? "Jack" : "John");
         }
     }
 }
