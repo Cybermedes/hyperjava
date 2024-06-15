@@ -17,10 +17,10 @@ This repository contains the following projects:
 - ✅ Zookeeper                           java -cp [nameOfTheJar].jar com.zookeeper.Main
 - ✅ Coffee Machine Simulator            java -cp [nameOfTheJar].jar com.coffeemachine.Main
 - ✅ Cinema Room Manager                 java -cp [nameOfTheJar].jar com.cinemaroom.Main
-- ⚠️  Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
+- ✅ Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
 - ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
 - ✅ ASCII Mirror                        java -cp [nameOfTheJar].jar com.asciimirror.Main
-- ⚠️  Last Pencil                         java -cp [nameOfTheJar].jar com.lastpencil.Main
+- ✅ Last Pencil                         java -cp [nameOfTheJar].jar com.lastpencil.Main
 - ⚠️  Bulls and Cows                      java -cp [nameOfTheJar].jar com.bullsandcows.Main
 
 Symbols:
