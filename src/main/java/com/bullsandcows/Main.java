@@ -4,40 +4,68 @@ import java.util.Scanner;
 
 public class Main {
 
+    private static String secretCode;
+    private static int cows = 0;
+    private static int bulls = 0;
+
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            String userGuess = scanner.nextLine();
-            String secretCode = "9305";
-            System.out.println(getCowsAndBulls(userGuess, secretCode));
+            System.out.println("Please, enter the secret code's length:");
+            int numberOfDigits = Integer.parseInt(scanner.nextLine());
+            System.out.println("Okay, let's start a game!");
+            secretCode = Generator.generateRandomNumber(numberOfDigits);
+
+            for (int i = 1;; i++) {
+                System.out.printf("Turn %d:%n", i);
+                checkUserInput(scanner);
+                System.out.println(getGradeMessage());
+
+                if (bulls == secretCode.length()) {
+                    System.out.println("Congratulations! You guessed the secret code.");
+                    break;
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
-    protected static String getCowsAndBulls(String input, String secret) {
-
-        int bulls = 0;
-        int cows = 0;
-
-        for (int i = 0; i < 4; i++) {
-            if (input.charAt(i) == secret.charAt(i)) {
+    protected static void checkUserInput(Scanner scanner) {
+        String input = scanner.nextLine();
+        for (int i = 0; i < secretCode.length(); i++) {
+            if (input.charAt(i) == secretCode.charAt(i)) {
                 bulls++;
-            } else if (input.contains(String.valueOf(secret.charAt(i)))) {
+            } else if (input.contains(String.valueOf(secretCode.charAt(i)))) {
                 cows++;
             }
         }
+    }
 
-        String noCows = "%d bull(s)".formatted(bulls);
-        String noBulls = "%d cow(s)".formatted(cows);
-        String bullsAndCows = "%d bull(s) and %d cow(s)".formatted(bulls, cows);
-        String grade = "Grade: %s. The secret code is %s.";
+    private static String getGradeMessage() {
 
-        if (bulls == 0 && cows == 0) {
-            return String.format("Grade: None. The secret code is %s.", secret);
-        } else if (cows == 0 && bulls > 0) {
-            return String.format(grade, noCows, secret);
-        } else if (bulls == 0 && cows > 0) {
-            return String.format(grade, noBulls, secret);
+        StringBuilder cowsAndBulls = new StringBuilder();
+        if (cows == 0 && bulls == 0) {
+            cowsAndBulls.append("None");
         } else {
-            return String.format(grade, bullsAndCows, secret);
+            cowsAndBulls.append("Grade: ");
+            if (bulls > 0) {
+                cowsAndBulls.append(bulls).append(" bull");
+                if (bulls > 1) {
+                    cowsAndBulls.append("s");
+                }
+                if (cows > 0) {
+                    cowsAndBulls.append(" and ").append(cows).append(" cow");
+                    if (cows > 1) {
+                        cowsAndBulls.append("s");
+                    }
+                }
+            } else {
+                cowsAndBulls.append(cows).append(" cow");
+                if (cows > 1) {
+                    cowsAndBulls.append("s");
+                }
+            }
         }
+        return cowsAndBulls.toString();
     }
 }
