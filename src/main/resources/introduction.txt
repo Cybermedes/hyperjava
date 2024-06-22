@@ -21,7 +21,7 @@ This repository contains the following projects:
 - ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
 - ✅ ASCII Mirror                        java -cp [nameOfTheJar].jar com.asciimirror.Main
 - ✅ Last Pencil                         java -cp [nameOfTheJar].jar com.lastpencil.Main
-- ⚠️  Bulls and Cows                      java -cp [nameOfTheJar].jar com.bullsandcows.Main
+- ✅ Bulls and Cows                      java -cp [nameOfTheJar].jar com.bullsandcows.Main
 
 Symbols:
 ✅ - Completed
