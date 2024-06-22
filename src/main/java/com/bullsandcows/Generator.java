@@ -1,37 +1,31 @@
 package com.bullsandcows;
 
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 public class Generator {
 
-    public static String generateRandomNumber(int length) {
+    public static String generateSecrete(int secretLength, int symbolsRangeLength) {
 
-        if (length > 10) {
-            String message = "Error: can't generate a secret number with a length of " +
-                    "11 because there aren't enough unique digits.";
-            throw new IllegalArgumentException(message);
-        }
+        assert secretLength > 0 && secretLength <= 36;
+        assert symbolsRangeLength > 0 && symbolsRangeLength <= 36;
+        assert symbolsRangeLength > secretLength;
+
         Random random = new Random();
-        Set<Integer> digits = new HashSet<>();
+        StringBuilder secret = new StringBuilder(secretLength);
+        String[] allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz".split("");
 
-        // First digit must not be equal to zero
-        int firstDigit = random.nextInt(9) + 1;
-        digits.add(firstDigit);
-
-        // StringBuilder to build the number
-        StringBuilder sb = new StringBuilder();
-        sb.append(firstDigit);
-
-        // Loop until the number has the desired length
-        while (sb.length() < length) {
-            int nextDigits = random.nextInt(10);
-            if (!digits.contains(nextDigits)) {
-                digits.add(nextDigits);
-                sb.append(nextDigits);
+        while (secret.length() < secretLength) {
+            int randomIndex = random.nextInt(symbolsRangeLength);
+            String digit = allowedChars[randomIndex];
+            if (secret.indexOf(digit) == -1) {
+                secret.append(digit);
             }
         }
-        return sb.toString();
+
+        String secretAsStars = "*".repeat(secretLength);
+        String symbolRange = GameEngine.getSymbolRange(symbolsRangeLength, allowedChars);
+        System.out.printf("The secret is prepared: %s (%s).", secretAsStars, symbolRange);
+        System.out.println();
+        return secret.toString();
     }
 }
