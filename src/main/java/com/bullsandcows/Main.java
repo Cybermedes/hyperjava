@@ -11,7 +11,7 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             // Game intro
             int secretLength = GameEngine.getSecretLength(scanner);
-            int numberOfSymbols = GameEngine.getSymbolsRangeLength(scanner, secretLength);
+            int numberOfSymbols = GameEngine.getSymbolsRangeLength(scanner);
             secretCode = Generator.generateSecrete(secretLength, numberOfSymbols);
             System.out.println("Okay, let's start a game!");
 

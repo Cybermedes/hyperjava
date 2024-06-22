@@ -8,7 +8,12 @@ public class Generator {
 
         assert secretLength > 0 && secretLength <= 36;
         assert symbolsRangeLength > 0 && symbolsRangeLength <= 36;
-        assert symbolsRangeLength > secretLength;
+
+        if (symbolsRangeLength < secretLength) {
+            String message = "Error: it's not possible to generate a code with a length of %s with %s unique symbols.";
+            System.out.printf(message + "%n", secretLength, symbolsRangeLength);
+            System.exit(1);
+        }
 
         Random random = new Random();
         StringBuilder secret = new StringBuilder(secretLength);

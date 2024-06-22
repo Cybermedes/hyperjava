@@ -4,30 +4,41 @@ import java.util.Scanner;
 
 public class GameEngine {
 
+    private static int readNumber(Scanner scanner) {
+        int number = 0;
+        if (scanner.hasNextInt()) {
+            number = scanner.nextInt();
+        } else {
+            String userInput = scanner.next();
+            System.out.printf("Error: %s isn't a valid number.%n", userInput);
+            System.exit(1);
+        }
+        return number;
+    }
+
     protected static int getSecretLength(Scanner scanner) {
         System.out.println("Input the length of the secret code:");
-        int secretLength = scanner.nextInt();
+        int secretLength = readNumber(scanner);
 
-        while (secretLength > 36) {
+        if (secretLength > 36) {
             System.out.println("Error: secret length cannot be greater than 36");
-            System.out.println("Input the length of the secret code:");
-            secretLength = scanner.nextInt();
+            System.exit(1);
+        } else if (secretLength < 1) {
+            System.out.println("Error: secret length cannot be less than 1");
+            System.exit(1);
         }
         return secretLength;
     }
 
-    protected static int getSymbolsRangeLength(Scanner scanner, int secretLength) {
+    protected static int getSymbolsRangeLength(Scanner scanner) {
         System.out.println("Input the number of possible symbols in the code:");
-        int symbolsRangeLength = scanner.nextInt();
+        int symbolsRangeLength = readNumber(scanner);
 
-        while (symbolsRangeLength > 36 || symbolsRangeLength < secretLength) {
-            if (symbolsRangeLength > 36) {
-                System.out.println("Error: symbols range length cannot be greater than 36");
-            } else {
-                System.out.println("Error: symbols range length cannot be smaller than secret length");
-            }
-            System.out.println("Input the number of possible symbols in the code:");
-            symbolsRangeLength = scanner.nextInt();
+        if (symbolsRangeLength > 36) {
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
+            System.exit(1);
+        } else if (symbolsRangeLength < 1) {
+            System.out.println("Error: symbols range length cannot be less than 1");
         }
         return symbolsRangeLength;
     }
