@@ -12,30 +12,53 @@ public class Main {
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            getUserPrompts(scanner);
+            getInitialUserPrompts(scanner);
+
+            while (true) {
+                printMenuOption();
+                int option = scanner.nextInt();
+                scanner.nextLine(); // clean the escape character
+                switch (option) {
+                    case 1 -> {
+                        System.out.println();
+                        System.out.println("Enter a name or email to search all suitable people.");
+                        String searchWord = scanner.nextLine();
+                        System.out.print(searchForData(searchWord));
+                    }
+                    case 2 -> printAllData();
+                    case 0 -> {
+                        System.out.printf("%nBye!");
+                        System.exit(0);
+                    }
+                    default -> System.out.printf("%nIncorrect option! Try again.%n");
+                }
+            }
         }
     }
 
-    public static void getUserPrompts(Scanner scanner) {
+    private static void printAllData() {
+        System.out.println();
+        System.out.println("=== List of people ===");
+        SAVED_DATA.forEach(System.out::println);
+    }
+
+    public static void printMenuOption() {
+        System.out.println();
+        String menu = """
+                === Menu ===
+                1. Find a person
+                2. Print all people
+                0. Exit""";
+        System.out.println(menu);
+    }
+
+    public static void getInitialUserPrompts(Scanner scanner) {
         System.out.println("Enter the number of people:");
         int numberOfPeople = scanner.nextInt();
         scanner.nextLine();
         System.out.println("Enter all people:");
         for (int i = 0; i < numberOfPeople; i++) {
             SAVED_DATA.add(scanner.nextLine());
-        }
-
-        System.out.println();
-        System.out.println("Enter the number of search queries:");
-        int numberOfSearches = scanner.nextInt();
-        scanner.nextLine();
-
-        for (int i = 0; i < numberOfSearches; i++) {
-            System.out.println();
-            System.out.println("Enter data to search people:");
-            String dataToSearch = scanner.nextLine();
-
-            System.out.println(searchForData(dataToSearch));
         }
     }
 
@@ -46,14 +69,11 @@ public class Main {
         for (String savedDatum : SAVED_DATA) {
             Matcher matcher = pattern.matcher(savedDatum);
             if (matcher.find()) {
-                if (sb.isEmpty()) {
-                    sb.append(System.lineSeparator()).append("Found people:");
-                }
-                sb.append(System.lineSeparator()).append(savedDatum);
+                sb.append(savedDatum).append(System.lineSeparator());
             }
         }
         if (sb.isEmpty()) {
-            sb.append("No matching people found.");
+            sb.append("No matching people found.").append(System.lineSeparator());
         }
         return sb.toString();
     }
