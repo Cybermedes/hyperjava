@@ -1,41 +1,48 @@
 package com.numberconverter;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         String userPrompt;
+        int sourceBase;
+        int targetBase;
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
-                System.out.print("Do you want to convert /from decimal or /to decimal? (To quit type /exit) ");
+                System.out.print("Enter two numbers in format: {source base} {target base} (To quit type /exit) ");
                 userPrompt = scanner.nextLine();
-                switch (userPrompt) {
-                    case "/exit" -> System.exit(0);
-                    case "/from" -> System.out.println(convertFromDecimalToBase(scanner));
-                    case "/to" -> System.out.println(convertFromBaseToDecimal(scanner));
-                    default -> System.out.println("unknown command");
+                if (userPrompt.equals("/exit")) {
+                    System.exit(0);
+                } else {
+                    sourceBase = Integer.parseInt(userPrompt.split("\\s+")[0]);
+                    targetBase = Integer.parseInt(userPrompt.split("\\s+")[1]);
+                    convert(sourceBase, targetBase, scanner);
                 }
-                scanner.nextLine();
                 System.out.println();
             }
         }
     }
 
-    protected static String convertFromDecimalToBase(Scanner scanner) {
-        System.out.print("Enter a number in decimal system: ");
-        int decimal = scanner.nextInt();
-        System.out.print("Enter the target base: ");
-        int base = scanner.nextInt();
-        return "Conversion result: " + Integer.toString(decimal, base);
-    }
+    protected static void convert(int sourceBase, int targetBase, Scanner scanner) {
+        if (37 < sourceBase || sourceBase < 2 || targetBase < 2 || targetBase > 37) {
+            return;
+        }
+        String input;
+        while (true) {
+            System.out.printf("Enter number in base %d to convert to base %d (To go back type /back) ",
+                    sourceBase,
+                    targetBase);
+            input = scanner.nextLine();
+            if (input.equals("/back")) {
+                return;
+            }
 
-    protected static String convertFromBaseToDecimal(Scanner scanner) {
-        System.out.print("Enter source number: ");
-        String number = scanner.nextLine();
-        System.out.print("Enter source base: ");
-        int base = scanner.nextInt();
-        return "Conversion to decimal result: " + Integer.parseInt(number,base);
+            System.out.println("Conversion result: " + new BigInteger(input, sourceBase)
+                    .toString(targetBase));
+            System.out.println();
+        }
     }
 
 }
