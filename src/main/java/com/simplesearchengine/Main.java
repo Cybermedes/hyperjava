@@ -1,10 +1,16 @@
 package com.simplesearchengine;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -12,7 +18,12 @@ public class Main {
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            getInitialUserPrompts(scanner);
+
+            if (args[0].equals("--data")) {
+                getDataSamplesFromFile();
+            } else {
+                System.exit(0);
+            }
 
             while (true) {
                 printMenuOption();
@@ -27,12 +38,14 @@ public class Main {
                     }
                     case 2 -> printAllData();
                     case 0 -> {
-                        System.out.printf("%nBye!");
+                        System.out.printf("%nBye!%n");
                         System.exit(0);
                     }
                     default -> System.out.printf("%nIncorrect option! Try again.%n");
                 }
             }
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
     }
 
@@ -52,13 +65,17 @@ public class Main {
         System.out.println(menu);
     }
 
-    public static void getInitialUserPrompts(Scanner scanner) {
-        System.out.println("Enter the number of people:");
-        int numberOfPeople = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Enter all people:");
-        for (int i = 0; i < numberOfPeople; i++) {
-            SAVED_DATA.add(scanner.nextLine());
+    public static void getDataSamplesFromFile() throws URISyntaxException {
+        try (var inputStream = Objects.requireNonNull(Main
+                .class
+                .getClassLoader()
+                .getResourceAsStream("simple_search_engine/samples.txt"));
+             var br = new BufferedReader(new InputStreamReader(inputStream));
+             Stream<String> lines = br.lines()) {
+
+            lines.forEach(SAVED_DATA::add);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
