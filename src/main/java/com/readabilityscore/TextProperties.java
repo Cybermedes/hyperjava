@@ -7,15 +7,28 @@ import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class ARI {
+public class TextProperties {
 
     private final Path sourceTextFile;
     private long words;
     private long sentences;
     private long characters;
+    private long syllables;
+    private long polysyllables;
 
-    public ARI(Path sourceTextFile) {
+    public TextProperties(Path sourceTextFile) {
         this.sourceTextFile = sourceTextFile;
+    }
+
+    private static long countSyllablesPerWord(String word) {
+        return Math.max(1, Pattern.compile("([aiouy]|e(?!$))+")
+                .matcher(word)
+                .results()
+                .count());
+    }
+
+    private static boolean isPolysyllable(String word) {
+        return countSyllablesPerWord(word) > 2;
     }
 
     public long countWords() {
@@ -24,7 +37,7 @@ public class ARI {
             this.words = words.flatMapToLong(s -> pattern.matcher(s).results().mapToLong(match -> 1))
                     .sum();
         } catch (IOException e) {
-            System.err.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return this.words;
     }
@@ -33,7 +46,7 @@ public class ARI {
         try (Stream<String> words = Files.lines(this.sourceTextFile)) {
             this.sentences = words.flatMap(s -> Stream.of(s.split("[.?!]"))).count();
         } catch (IOException e) {
-            System.err.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return this.sentences;
     }
@@ -44,33 +57,38 @@ public class ARI {
             this.characters = words.flatMapToLong(s -> pattern.matcher(s).results().mapToLong(matchResult -> 1))
                     .sum();
         } catch (IOException e) {
-            System.err.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
         return this.characters;
     }
 
-    public double calculateIndex() {
-        return 4.71 *
-                ((double) this.characters / this.words) + 0.5 *
-                ((double) this.words / this.sentences) - 21.43;
+    public long countSyllables() {
+        try (Stream<String> words = Files.lines(this.sourceTextFile)) {
+            this.syllables = words.flatMap(s -> Stream.of(s.split("\\s+")))
+                    .mapToLong(TextProperties::countSyllablesPerWord)
+                    .sum();
+        } catch (IOException e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+        return this.syllables;
     }
 
-    public String getAgeRange() {
-        StringBuilder sb = new StringBuilder();
-        int idx = (int) Math.ceil(calculateIndex());
-        if (idx >= 14) {
-            sb.append("18-22");
-        } else {
-            sb.append(idx + 4).append("-").append(idx + 5);
+    public long countPolysyllables() {
+        try (Stream<String> words = Files.lines(this.sourceTextFile)) {
+            this.polysyllables = words.flatMap(s -> Stream.of(s.split("\\PL+")))
+                    .filter(TextProperties::isPolysyllable)
+                    .count();
+        } catch (IOException e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
-        return sb.toString();
+        return this.polysyllables;
     }
 
     public void getFileContent() {
         try (Stream<String> text = Files.lines(this.sourceTextFile)) {
             text.forEach(System.out::println);
         } catch (IOException e) {
-            System.err.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }
