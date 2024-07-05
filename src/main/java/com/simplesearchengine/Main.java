@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private static final List<String> SAVED_DATA = new ArrayList<>();
+    private static final List<String> savedData = new ArrayList<>();
 
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -52,7 +52,7 @@ public class Main {
     private static void printAllData() {
         System.out.println();
         System.out.println("=== List of people ===");
-        SAVED_DATA.forEach(System.out::println);
+        savedData.forEach(System.out::println);
     }
 
     public static void printMenuOption() {
@@ -73,7 +73,7 @@ public class Main {
              var br = new BufferedReader(new InputStreamReader(inputStream));
              Stream<String> lines = br.lines()) {
 
-            lines.forEach(SAVED_DATA::add);
+            lines.forEach(savedData::add);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -83,7 +83,7 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         Pattern pattern = Pattern.compile(searchWord, Pattern.CASE_INSENSITIVE);
 
-        for (String savedDatum : SAVED_DATA) {
+        for (String savedDatum : savedData) {
             Matcher matcher = pattern.matcher(savedDatum);
             if (matcher.find()) {
                 sb.append(savedDatum).append(System.lineSeparator());

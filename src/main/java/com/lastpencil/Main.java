@@ -9,7 +9,7 @@ public class Main {
         main.runGame();
     }
 
-    public void runGame() {
+    protected void runGame() {
         try (Scanner scanner = new Scanner(System.in)) {
             int numberOfPencils = getNumberOfPencils(scanner);
             String firstPlayer = getFirstPlayer(scanner);
@@ -20,7 +20,7 @@ public class Main {
         }
     }
 
-    private int getNumberOfPencils(Scanner scanner) {
+    protected int getNumberOfPencils(Scanner scanner) {
         System.out.println("How many pencils would you like to use:");
         int numberOfPencils;
         while (true) {
@@ -37,7 +37,7 @@ public class Main {
         }
     }
 
-    private String getFirstPlayer(Scanner scanner) {
+    protected String getFirstPlayer(Scanner scanner) {
         System.out.println("Who will be the first (John, Jack):");
         String player;
         while (true) {
@@ -50,7 +50,7 @@ public class Main {
         }
     }
 
-    private void playGame(Scanner scanner,
+    protected void playGame(Scanner scanner,
                           int numberOfPencils,
                           String firstPlayer,
                           String otherPlayer,
@@ -72,7 +72,7 @@ public class Main {
         System.out.printf("%s won!%n", currentPlayer.equals("John") ? "Jack" : "John");
     }
 
-    private int getPencilsTaken(Scanner scanner,
+    protected int getPencilsTaken(Scanner scanner,
                                 int numberOfPencils,
                                 String currentPlayer,
                                 Bot bot) {
