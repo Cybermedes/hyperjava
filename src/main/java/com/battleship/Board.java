@@ -18,4 +18,8 @@ class Board {
     char[][] getBoard() {
         return board;
     }
+
+    void updateBoard(int row, int column, char value) {
+        this.board[column][row] = value;
+    }
 }

@@ -4,58 +4,90 @@ import java.util.Scanner;
 
 class Game {
 
-    private final Board board;
+    private final Scanner scanner;
+    private final Board board = new Board();
+    private final Ship[] ships = {
+            new Ship("Aircraft Carrier", 5),
+            new Ship("Battleship", 4),
+            new Ship("Submarine", 3),
+            new Ship("Cruiser", 3),
+            new Ship("Destroyer", 2)
+    };
 
-    Game() {
-        this.board = new Board();
+    public Game() {
+        this.scanner = new Scanner(System.in);
     }
 
     void start() {
         Printer.printSetUpBoard(board);
-        readPosition();
+        readShipPosition();
     }
 
-    void readPosition() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Enter the coordinates of the ship:");
-            String start = scanner.next();
-            String end = scanner.next();
-            System.out.println(validateCoordinates(start, end));
+    void readShipPosition() {
+
+        for (Ship ship : this.ships) {
+            System.out.println();
+            System.out.printf("Enter the coordinates of the %s (%d cells):%n", ship.name(), ship.size());
+            System.out.println();
+
+            while (true) {
+                try {
+                    placeWarship(ship.size());
+                    break;
+                } catch (InvalidSizeException e) {
+                    System.out.println();
+                    System.out.printf("Error! Wrong length of the %s! Try again:%n", ship.name());
+                } catch (InvalidLocationException e) {
+                    System.out.println();
+                    System.out.println("Error! Wrong ship location! Try again:");
+                } catch (TooCloseProximityException e) {
+                    System.out.println();
+                    System.out.println("Error! You placed it too close to another one. Try again:");
+                }
+                System.out.println();
+                System.out.print("> ");
+            }
+            System.out.println();
+            Printer.printSetUpBoard(board);
         }
     }
 
-    String validateCoordinates(String start, String end) {
+    void placeWarship(int size) throws InvalidLocationException,
+            InvalidSizeException,
+            TooCloseProximityException {
+
+        String coordinateShipStart = scanner.next().toUpperCase();
+        String coordinateShipEnd = scanner.next().toUpperCase();
+
         // Check if the input format is valid
-        if (!isValidCoordinate(start) || !isValidCoordinate(end)) {
-            return "Error!";
+        if (!isValidCoordinate(coordinateShipStart) || !isValidCoordinate(coordinateShipEnd)) {
+            throw new InvalidLocationException();
         }
 
-        // Convert the coordinates into integers, ASCII values for the chars
-        int startRow = start.toUpperCase().charAt(0) - 'A';
-        int startCol = Integer.parseInt(start.substring(1)) - 1;
-        int endRow = end.toUpperCase().charAt(0) - 'A';
-        int endCol = Integer.parseInt(end.substring(1)) - 1;
-
-        // Check if the coordinates are in a straight line (same row or same column)
-        if (startRow != endRow && startCol != endCol) {
-            return "Error!";
+        Position position = new Position(coordinateShipStart, coordinateShipEnd);
+        // Check if warships size is correct and there are no collisions
+        if (!isSizeCorrect(position, size)) {
+            throw new InvalidSizeException();
+        }
+        if (!areCollisions(position)) {
+            throw new TooCloseProximityException();
         }
 
-        // Generate the parts and calculate the length
-        StringBuilder parts = new StringBuilder();
-        int length;
-        if (startRow == endRow) {
-            length = Math.abs(endCol - startCol) + 1;
-            for (int col = Math.min(startCol, endCol); col <= Math.max(startCol, endCol); col++) {
-                parts.append((char) (startRow + 'A')).append(col + 1).append(" ");
+        int startX = position.getStart().axisX();
+        int startY = position.getStart().axisY();
+        int endX = position.getEnd().axisX();
+        int endY = position.getEnd().axisY();
+
+        // Update game board with the warships positions
+        if (startX == endX) {
+            for (int y = startY; y != endY + 1; y++) {
+                board.updateBoard(startX, y, 'O');
             }
         } else {
-            length = Math.abs(endRow - startRow) + 1;
-            for (int row = Math.min(startRow, endRow); row <= Math.max(startRow, endRow); row++) {
-                parts.append((char) (row + 'A')).append(startCol + 1).append(" ");
+            for (int x = startX; x != endX + 1; x++) {
+                board.updateBoard(x, startY, 'O');
             }
         }
-        return "Length: " + length + System.lineSeparator() + "Parts: " + parts.toString().trim();
     }
 
     private static boolean isValidCoordinate(String coordinate) {
@@ -76,5 +108,59 @@ class Game {
             return false;
         }
         return true;
+    }
+
+    private boolean isSizeCorrect(Position position, int size) {
+        if (position.getStart().axisX() == position.getEnd().axisX()) {
+            return size == position.getEnd().axisY() - position.getStart().axisY() + 1;
+        } else if (position.getStart().axisY() == position.getEnd().axisY()) {
+            return size == position.getEnd().axisX() - position.getStart().axisX() + 1;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean areCollisions(Position position) {
+        int startX = position.getStart().axisX();
+        int startY = position.getStart().axisY();
+        int endX = position.getEnd().axisX();
+        int endY = position.getEnd().axisY();
+
+        if (startX == endX) {
+            for (int y = startY; y != endY + 1; y++) {
+                if (isBordering(startX, y)) {
+                    return false;
+                }
+            }
+        } else {
+            for (int x = startX; x != endX + 1; x++) {
+                if (isBordering(x, startY)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isBordering(int x, int y) {
+        Shift[] shifts = {
+                new Shift(-1, 1),
+                new Shift(0, 1),
+                new Shift(1, 1),
+                new Shift(1, 0),
+                new Shift(1, -1),
+                new Shift(0, -1),
+                new Shift(-1, -1),
+                new Shift(-1, 0)
+        };
+
+        for (Shift shift : shifts) {
+            try {
+                if (!(board.getBoard()[y + shift.y()][x + shift.x()] == '~')) {
+                    return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException ignored) {}
+        }
+        return false;
     }
 }

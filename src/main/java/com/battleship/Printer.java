@@ -19,6 +19,5 @@ abstract class Printer {
             }
             System.out.println();
         }
-        System.out.println();
     }
 }
