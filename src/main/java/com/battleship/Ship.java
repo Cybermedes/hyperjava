@@ -1,16 +1,12 @@
 package com.battleship;
 
-class TooCloseProximityException extends Exception {
-}
+class TooCloseProximityException extends Exception { }
 
-class InvalidSizeException extends Exception {
-}
+class InvalidSizeException extends Exception { }
 
-class InvalidLocationException extends Exception {
-}
+class InvalidLocationException extends Exception { }
 
-record Shift(int x, int y) {
-}
+record Shift(int x, int y) { }
 
 record Coordinate(int axisX, int axisY) {
 
@@ -53,5 +49,4 @@ class Position {
     }
 }
 
-record Ship(String name, int size) {
-}
+record Ship(String name, int size) { }

@@ -26,10 +26,14 @@ class Game {
         // Start battle
         System.out.println("The game starts!");
         System.out.println();
+        Printer.setFogOfWar(true);
         Printer.printSetUpBoard(board);
 
         // Try one shot
         fire();
+        System.out.println();
+        Printer.setFogOfWar(false);
+        Printer.printSetUpBoard(board);
 
         scanner.close();
     }

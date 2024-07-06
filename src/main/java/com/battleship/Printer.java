@@ -2,6 +2,12 @@ package com.battleship;
 
 abstract class Printer {
 
+    private static boolean fogOfWar = false;
+
+    static void setFogOfWar(boolean status) {
+        fogOfWar = status;
+    }
+
     static void printSetUpBoard(Board board) {
         // Print the first row with numbers
         System.out.print(" ");
@@ -14,7 +20,11 @@ abstract class Printer {
                 if (j == 0) {
                     System.out.print((char) ('A' + i)); // ASCII of 'A' is 65
                 } else {
-                    System.out.print(" " + gameBoard[i][j - 1]);
+                    if (fogOfWar && gameBoard[i][j - 1] == 'O') {
+                        System.out.print(" " + Symbols.FOG.getSymbol());
+                    } else {
+                        System.out.print(" " + gameBoard[i][j - 1]);
+                    }
                 }
             }
             System.out.println();
