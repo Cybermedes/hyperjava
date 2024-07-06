@@ -19,24 +19,63 @@ class Game {
     }
 
     void start() {
+        // Initial preparations
         Printer.printSetUpBoard(board);
         readShipPosition();
+
+        // Start battle
+        System.out.println("The game starts!");
+        System.out.println();
+        Printer.printSetUpBoard(board);
+
+        // Try one shot
+        fire();
+
+        scanner.close();
+    }
+
+    void fire() {
+        System.out.println("Take a shot!");
+        System.out.println();
+
+        Coordinate shot;
+        while (true) {
+            try {
+                String position = scanner.next().toUpperCase();
+                if (isValidPosition(position)) {
+                    shot = Coordinate.parseCoordinate(position);
+                    break;
+                } else {
+                    throw new InvalidLocationException();
+                }
+            } catch (InvalidLocationException e) {
+                System.out.printf("%nError! You entered the wrong coordinates! Try again:%n%n");
+            }
+        }
+
+        System.out.println();
+        if (board.getBoard()[shot.axisY()][shot.axisX()] == 'O') {
+            board.updateBoard(shot.axisX(), shot.axisY(), 'X');
+            Printer.printSetUpBoard(board);
+            System.out.println("You hit a ship!");
+        } else {
+            board.updateBoard(shot.axisX(), shot.axisY(), 'M');
+            Printer.printSetUpBoard(board);
+            System.out.println("You missed!");
+        }
     }
 
     void readShipPosition() {
 
         for (Ship ship : this.ships) {
-            System.out.println();
-            System.out.printf("Enter the coordinates of the %s (%d cells):%n", ship.name(), ship.size());
-            System.out.println();
+            System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", ship.name(), ship.size());
 
             while (true) {
                 try {
                     placeWarship(ship.size());
                     break;
                 } catch (InvalidSizeException e) {
-                    System.out.println();
-                    System.out.printf("Error! Wrong length of the %s! Try again:%n", ship.name());
+                    System.out.printf("%nError! Wrong length of the %s! Try again:%n", ship.name());
                 } catch (InvalidLocationException e) {
                     System.out.println();
                     System.out.println("Error! Wrong ship location! Try again:");
@@ -45,7 +84,6 @@ class Game {
                     System.out.println("Error! You placed it too close to another one. Try again:");
                 }
                 System.out.println();
-                System.out.print("> ");
             }
             System.out.println();
             Printer.printSetUpBoard(board);
@@ -60,7 +98,7 @@ class Game {
         String coordinateShipEnd = scanner.next().toUpperCase();
 
         // Check if the input format is valid
-        if (!isValidCoordinate(coordinateShipStart) || !isValidCoordinate(coordinateShipEnd)) {
+        if (!isValidPosition(coordinateShipStart) || !isValidPosition(coordinateShipEnd)) {
             throw new InvalidLocationException();
         }
 
@@ -90,12 +128,12 @@ class Game {
         }
     }
 
-    private static boolean isValidCoordinate(String coordinate) {
-        if (coordinate == null || coordinate.length() < 2 || coordinate.length() > 3) {
+    private static boolean isValidPosition(String position) {
+        if (position == null || position.length() < 2 || position.length() > 3) {
             return false;
         }
-        char row = coordinate.charAt(0);
-        String colStr = coordinate.substring(1);
+        char row = position.charAt(0);
+        String colStr = position.substring(1);
         if (row < 'A' || row > 'J') {
             return false;
         }
