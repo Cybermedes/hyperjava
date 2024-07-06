@@ -13,9 +13,11 @@ class Game {
             new Ship("Cruiser", 3),
             new Ship("Destroyer", 2)
     };
+    private int numberOfPossibleHits;
 
     public Game() {
         this.scanner = new Scanner(System.in);
+        this.numberOfPossibleHits = 0;
     }
 
     void start() {
@@ -26,21 +28,21 @@ class Game {
         // Start battle
         System.out.println("The game starts!");
         System.out.println();
-        Printer.setFogOfWar(true);
+        Printer.setFogOfWar();
         Printer.printSetUpBoard(board);
 
-        // Try one shot
-        fire();
+        System.out.println("Take a shot!");
         System.out.println();
-        Printer.setFogOfWar(false);
-        Printer.printSetUpBoard(board);
+
+
+        while (numberOfPossibleHits > 0) {
+            fire();
+        }
 
         scanner.close();
     }
 
     void fire() {
-        System.out.println("Take a shot!");
-        System.out.println();
 
         Coordinate shot;
         while (true) {
@@ -60,18 +62,31 @@ class Game {
         System.out.println();
         if (board.getBoard()[shot.axisY()][shot.axisX()] == 'O') {
             board.updateBoard(shot.axisX(), shot.axisY(), 'X');
+            numberOfPossibleHits--;
             Printer.printSetUpBoard(board);
-            System.out.println("You hit a ship!");
+
+            if (isShipStillAfloat(shot)) {
+                System.out.println("You hit a ship! Try again:");
+            } else if (numberOfPossibleHits > 0) {
+                System.out.println("You sank a ship! Specify a new target:");
+            } else {
+                System.out.print("You sank the last ship. You won. Congratulations!");
+            }
+
         } else {
-            board.updateBoard(shot.axisX(), shot.axisY(), 'M');
+            if (board.getBoard()[shot.axisY()][shot.axisX()] != 'X') {
+                board.updateBoard(shot.axisX(), shot.axisY(), 'M');
+            }
             Printer.printSetUpBoard(board);
-            System.out.println("You missed!");
+            System.out.println("You missed! Try again:");
         }
+        System.out.println();
     }
 
     void readShipPosition() {
 
         for (Ship ship : this.ships) {
+            numberOfPossibleHits += ship.size();
             System.out.printf("Enter the coordinates of the %s (%d cells):%n%n", ship.name(), ship.size());
 
             while (true) {
@@ -198,11 +213,15 @@ class Game {
 
         for (Shift shift : shifts) {
             try {
-                if (!(board.getBoard()[y + shift.y()][x + shift.x()] == '~')) {
+                if (board.getBoard()[y + shift.y()][x + shift.x()] == 'O') {
                     return true;
                 }
             } catch (ArrayIndexOutOfBoundsException ignored) {}
         }
         return false;
+    }
+
+    private boolean isShipStillAfloat(Coordinate coordinate) {
+        return isBordering(coordinate.axisX(), coordinate.axisY());
     }
 }

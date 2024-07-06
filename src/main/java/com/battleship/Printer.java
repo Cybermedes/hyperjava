@@ -4,8 +4,8 @@ abstract class Printer {
 
     private static boolean fogOfWar = false;
 
-    static void setFogOfWar(boolean status) {
-        fogOfWar = status;
+    static void setFogOfWar() {
+        fogOfWar = true;
     }
 
     static void printSetUpBoard(Board board) {
