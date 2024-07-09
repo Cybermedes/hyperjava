@@ -12,10 +12,12 @@ class ConnectFour extends JFrame implements ActionListener {
     private static final Color lightGreen = new Color(156, 204, 101);
     private static final Color darkGreen = new Color(175, 213, 130);
     private static final char[] players = new char[]{'X', 'O'};
+    private final JButton[][] board;
     private int turn;
     private int counter;
 
     ConnectFour() {
+        this.board = new JButton[ROWS][COLUMNS];
         this.turn = 0;
         this.counter = 1;
 
@@ -51,6 +53,7 @@ class ConnectFour extends JFrame implements ActionListener {
                 button.setFocusPainted(false);
                 button.addActionListener(this);
                 panel.add(button);
+                board[ROWS - 1 - i][j] = button;
             }
         }
         return panel;
@@ -59,7 +62,13 @@ class ConnectFour extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         char label = players[this.turn % players.length];
-        ((JButton) e.getSource()).setText(String.valueOf(label));
+        int column = ((JButton) e.getSource()).getName().charAt("Button".length()) - 'A';
+        for (int i = 0; i < ROWS; i++) {
+            if (this.board[i][column].getText().isEmpty()) {
+                this.board[i][column].setText(String.valueOf(label));
+                break;
+            }
+        }
         this.turn++;
     }
 }
