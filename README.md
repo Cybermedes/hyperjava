@@ -20,7 +20,7 @@ If a project is too big or requires many folders and files (Spring Boot for exam
 
 ### How to run
 
-On the terminal, just type the command below to package the whole application into
+On the terminal, just type the `command below to` package the whole application into
 a jar file with all the dependencies.
 
 ```bash
@@ -34,7 +34,7 @@ The packaged file will be:
 You can rename this jar for a shorter name if you want.
 
 The jar file has a `Main` class with an intro message with a list of the projects available and 
-commands to run a specific project.
+`commands to run` a specific project.
 
 ```bash
 java -jar [name].jar 
@@ -45,14 +45,17 @@ java -jar [name].jar
 
 More information about what each project does and the objectives, click on the links below.
 
-- com.asciimirror: ASCII Mirror (https://hyperskill.org/projects/260)
-- com.bullsandcows: Bull and Cows (https://hyperskill.org/projects/53?track=12)
-- com.chatbot: Simple Chat Bot (https://hyperskill.org/projects/113?track=12)
-- com.chucknorriscipher: Chuck Norris Cipher Encoder (https://hyperskill.org/projects/293?track=9)
-- com.cinemaroom: Cinema Room Manager (https://hyperskill.org/projects/133)
-- com.introduction: Main class of the jar file with an intro message, not a project.
-- com.coffeemachine: Coffee Machine Simulator (https://hyperskill.org/projects/33?track=12)
-- com.lastpencil: Last Pencil (https://hyperskill.org/projects/341?track=12)
-- com.numberconverter: Number Base Converter (https://hyperskill.org/projects/181)
-- com.tictactoe: Simple Tic-Tac-Toe (https://hyperskill.org/projects/48?track=15)
-- com.zookeeper: Zookeeper (https://hyperskill.org/projects/229?track=12)
+- `com.asciimirror`: ASCII Mirror (https://hyperskill.org/projects/260)
+- `com.battleship`: Battleship with Java (https://hyperskill.org/projects/383?track=12)
+- `com.bullsandcows`: Bull and Cows (https://hyperskill.org/projects/53?track=12)
+- `com.chatbot`: Simple Chat Bot (https://hyperskill.org/projects/113?track=12)
+- `com.chucknorriscipher`: Chuck Norris Cipher Encoder (https://hyperskill.org/projects/293?track=9)
+- `com.cinemaroom`: Cinema Room Manager (https://hyperskill.org/projects/133)
+- `com.coffeemachine`: Coffee Machine Simulator (https://hyperskill.org/projects/33?track=12)
+- `com.introduction`: Main class of the jar file with an intro message, not a project.
+- `com.lastpencil`: Last Pencil (https://hyperskill.org/projects/341?track=12)
+- `com.numberconverter`: Number Base Converter (https://hyperskill.org/projects/181)
+- `com.readabilityscore`: Readability Score (https://hyperskill.org/projects/39?track=9)
+- `com.simplesearchengine`: Simple Search Engine (https://hyperskill.org/projects/66?track=12)
+- `com.tictactoe`: Simple Tic-Tac-Toe (https://hyperskill.org/projects/48?track=15)
+- `com.zookeeper`: Zookeeper (https://hyperskill.org/projects/229?track=12)
