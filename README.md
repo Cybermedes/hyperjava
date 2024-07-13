@@ -20,30 +20,29 @@ If a project is too big or requires many folders and files (Spring Boot for exam
 
 ### How to run
 
-On the terminal, just type the `command below to` package the whole application into
-a jar file with all the dependencies.
+On your terminal, if you have Maven installed on your machine, just type the command below to 
+package the projects into a jar file with all the dependencies included.
 
 ```bash
 mvn package assembly:single
 ```
 
-The packaged file will be:
+The packaged file will be at:
 
-`target\hyperjava-1.0.0-jar-with-dependencies.jar`
+`target/hyperjava-1.0.0-jar-with-dependencies.jar`
 
-You can rename this jar for a shorter name if you want.
+You can rename this jar for any name you want.
 
-The jar file has a `Main` class with an intro message with a list of the projects available and 
-`commands to run` a specific project.
+This jar file has a `Main` class already defined as classpath. So you can run the command down below to read an 
+intro message with a list of the projects available and the templates for commands to run a specific project.
 
 ```bash
 java -jar [name].jar 
 ```
 
-
 ## List of projects:
 
-More information about what each project does and the objectives, click on the links below.
+More information about what each project does and their stage implementations, available on the links below.
 
 - `com.asciimirror`: ASCII Mirror (https://hyperskill.org/projects/260)
 - `com.battleship`: Battleship with Java (https://hyperskill.org/projects/383?track=12)
