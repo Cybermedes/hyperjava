@@ -13,15 +13,19 @@
 ************ Hyperskill projects in Java ************
 This repository contains the following projects:
 
-- ✅ Simple Chat Bot                     java -cp [nameOfTheJar].jar com.chatbot.Main
-- ✅ Zookeeper                           java -cp [nameOfTheJar].jar com.zookeeper.Main
-- ✅ Coffee Machine Simulator            java -cp [nameOfTheJar].jar com.coffeemachine.Main
-- ✅ Cinema Room Manager                 java -cp [nameOfTheJar].jar com.cinemaroom.Main
-- ✅ Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
-- ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
 - ✅ ASCII Mirror                        java -cp [nameOfTheJar].jar com.asciimirror.Main
-- ✅ Last Pencil                         java -cp [nameOfTheJar].jar com.lastpencil.Main
+- ⚠️ Battleship                           java -cp [nameOfTheJar].jar com.battleship.Main
 - ✅ Bulls and Cows                      java -cp [nameOfTheJar].jar com.bullsandcows.Main
+- ✅ Simple Chat Bot                     java -cp [nameOfTheJar].jar com.chatbot.Main
+- ✅ Chuck Norris Cipher Encoder         java -cp [nameOfTheJar].jar com.chucknorriscipher.Main
+- ✅ Cinema Room Manager                 java -cp [nameOfTheJar].jar com.cinemaroom.Main
+- ✅ Coffee Machine Simulator            java -cp [nameOfTheJar].jar com.coffeemachine.Main
+- ✅ Last Pencil                         java -cp [nameOfTheJar].jar com.lastpencil.Main
+- ✅ Number Base Converter               java -cp [nameOfTheJar].jar com.numberconverter.Main
+- ✅ Readability Score                   java -cp [nameOfTheJar].jar com.readabilityscore.Main
+- ⚠️ Simple Search Engine                 java -cp [nameOfTheJar].jar com.simplesearchengine.Main
+- ✅ Simple Tic-Tac-Toe                  java -cp [nameOfTheJar].jar com.tictactoe.Main
+- ✅ Zookeeper                           java -cp [nameOfTheJar].jar com.zookeeper.Main
 
 Symbols:
 ✅ - Completed
@@ -29,3 +33,6 @@ Symbols:
 
 Each project runs independently of each other, to run a specific a project
 from the jar file just type the command inside parentheses on your terminal.
+
+For more information about a project enter the command with the '--help' argument:
+'java -jar [nameOfTheJar].jar --help [nameOfTheProject]'
